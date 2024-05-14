@@ -36,6 +36,7 @@ var PecasSchema = new Schema({
       default: Date.now
     }
   },
+<<<<<<< Updated upstream
   chassi: {
     value: {
       type: Number,
@@ -46,6 +47,14 @@ var PecasSchema = new Schema({
       default: Date.now
     }
   }
+=======
+  camara : {
+    type: Number,  
+    unique : false,
+    required : false,
+  },
+    
+>>>>>>> Stashed changes
 });
 
 

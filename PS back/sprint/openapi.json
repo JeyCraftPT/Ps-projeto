@@ -1,0 +1,482 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Gestão de Montagem de Drones",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/utilizador/montagem{idm}": {
+      "get": {
+        "tags": [
+          "Utilizador"
+        ],
+        "summary": "Mostrar montagem",
+        "description": "Obtem uma montagem pelo seu ID",
+        "parameters": [
+          {
+            "name": "idm",
+            "in": "path",
+            "description": "ID da montagem",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Montagem pretendida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserGet"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Utilizador não existe"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Utilizador"
+        ],
+        "summary": "Atualizar montagem de drone",
+        "description": "Atualiza dados da montagem de drones",
+        "parameters": [
+          {
+            "name": "idm",
+            "in": "path",
+            "description": "ID do dado da montagem a atualizar",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserPut"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Dados da montagem atualizados com sucesso"
+          },
+          "400": {
+            "description": "Requisição inválida"
+          },
+          "404": {
+            "description": "Montagem não existe"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Utilizador"
+        ],
+        "summary": "Remover montagem de drone",
+        "description": "Remove uma uma montagem",
+        "parameters": [
+          {
+            "name": "idm",
+            "in": "path",
+            "description": "ID da montagem a remover",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Montagem removida com sucesso"
+          },
+          "404": {
+            "description": "Montagem não encontrada"
+          }
+        }
+      }
+    },
+    "/api/utilizador/montagem": {
+      "post": {
+        "tags": [
+          "Utilizador"
+        ],
+        "summary": "Adicionar uma nova montagem",
+        "description": "Adiciona uma nova montagem à lista de montagens",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserPut"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Montagem adiconada com sucesso!"
+          },
+          "400": {
+            "description": "Requisição inválida"
+          }
+        }
+      }
+    },
+    "/api/utilizador/montagem/{idm}/peça/{idp}": {
+      "get": {
+        "tags": [
+          "Peças"
+        ],
+        "summary": "Obter peça através do ID",
+        "description": "Obtem dados deuma peça de uma montagem",
+        "parameters": [
+          {
+            "name": "idm",
+            "in": "path",
+            "description": "ID da montagem",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "idp",
+            "in": "path",
+            "description": "ID da peça",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Peça encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PecaGet"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Montagem ou peça não existem"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Peças"
+        ],
+        "summary": "Remover peça através do ID",
+        "description": "Remove uma peça conforme ID",
+        "parameters": [
+          {
+            "name": "idm",
+            "in": "path",
+            "description": "ID da montagem",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "idp",
+            "in": "path",
+            "description": "ID da peça",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Peça desmontada!"
+          },
+          "404": {
+            "description": "Montagem ou peça não existem"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Peças"
+        ],
+        "summary": "Atualizar peça através do ID",
+        "description": "Atualiza dados especificos de uma peça",
+        "parameters": [
+          {
+            "name": "idm",
+            "in": "path",
+            "description": "ID da montagem",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "idp",
+            "in": "path",
+            "description": "ID da peça",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PecaGet"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Peça atualizada com sucesso"
+          },
+          "400": {
+            "description": "Requisição inválida"
+          },
+          "404": {
+            "description": "Montagem ou peça não existem"
+          }
+        }
+      }
+    },
+    "/api/utilizador/montagem/{idm}/peça": {
+      "get": {
+        "tags": [
+          "Peças"
+        ],
+        "summary": "Listar peças",
+        "description": "Obtem as peças duma montagem",
+        "parameters": [
+          {
+            "name": "idm",
+            "in": "path",
+            "description": "ID da montagem",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista das peças da montagem",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PecaGet"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Montagem não existe"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Peças"
+        ],
+        "summary": "Adiciona nova peça à montagem",
+        "description": "Adiciona peça à montagem",
+        "parameters": [
+          {
+            "name": "idm",
+            "in": "path",
+            "description": "ID da montagem",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PecaGet"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Nova peça montada!"
+          },
+          "400": {
+            "description": "Requisição inválida"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Peças"
+        ],
+        "summary": "Remover todas as peças da montagem",
+        "description": "Remove todas as pelas associadas à montagem",
+        "parameters": [
+          {
+            "name": "idm",
+            "in": "path",
+            "description": "ID da montagem",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Peças montadas apagadas"
+          },
+          "404": {
+            "description": "Montagem não encontrada"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserGet": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "recipiente": {
+            "type": "string"
+          },
+          "morada": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "id": 1,
+          "name": "Exemplo de uma montagem",
+          "description": "Isto é a montagem do drone X."
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/Item"
+          }
+        }
+      },
+      "UserPut": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "descrption": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Item"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "descrption"
+        ],
+        "example": {
+          "id": 123,
+          "name": "Drone favorito",
+          "description": "Modelo X, feito por Y"
+        }
+      },
+      "PecaGet": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Item"
+            }
+          },
+          "peca": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "idm",
+          "idp"
+        ],
+        "example": {
+          "id": 456,
+          "name": "Drone X",
+          "items": [
+            {
+              "peca": "hélice 12/06/2023"
+            },
+            {
+              "peca": "camara 31/05/2023"
+            },
+            {
+              "peca": "corpo 4/02/2023"
+            },
+            {
+              "peca": "motor 15/06/2022"
+            }
+          ]
+        }
+      },
+      "Item": {
+        "type": "object",
+        "properties": {
+          "peso": {
+            "type": "integer"
+          },
+          "nome": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
