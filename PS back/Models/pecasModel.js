@@ -6,28 +6,48 @@ import { Schema } from 'mongoose';
     Pecas Schema
 */
 var PecasSchema = new Schema({
-  helice : {
-    type: Number,
-    unique : false,
-    required : false,
+  helice: {
+    value: {
+      type: Number,
+      required: false
+    },
+    timestamp: {
+      type: Date,
+      default: Date.now
+    }
   },
-  bateria : {
-    type: Number,
-    unique : false,
-    required : false,
+  bateria: {
+    value: {
+      type: Number,
+      required: false
+    },
+    timestamp: {
+      type: Date,
+      default: Date.now
+    }
   },
-  motores : {
-    type: Number,
-    unique : false,
-    required : false,
+  motores: {
+    value: {
+      type: Number,
+      required: false
+    },
+    timestamp: {
+      type: Date,
+      default: Date.now
+    }
   },
-  chassi : {
-    type: Number,  
-    unique : false,
-    required : false,
-  },
-    
+  chassi: {
+    value: {
+      type: Number,
+      required: false
+    },
+    timestamp: {
+      type: Date,
+      default: Date.now
+    }
+  }
 });
+
 
 const Peca = mongoose.model('Pecas', PecasSchema)
 
