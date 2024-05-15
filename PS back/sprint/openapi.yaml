@@ -3,10 +3,94 @@ info:
   title:  Gestão de Montagem de Drones
   version: 1.0.0
 paths:
-  /api/utilizador/montagem{idm}:
+  /login:
     get:
       tags:
         - Utilizador
+      summary: Logs in user
+      description: Takes the username and password and logs in
+      operationId: getBody
+      responses: 
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+  /get/login/{idu}:
+    get:
+      tags:
+        - Utilizador
+      summary: Searches user id
+      description: Takes the user id and searches for its id
+      parameters:
+        - name: idu
+          in: path
+          description: ID dao User
+          required: true
+          schema:
+            type: integer
+            format: int64
+      operationId: getParams
+      responses: 
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+  /register:
+    post:
+      tags:
+      - Utilizador
+      summary: Register a new account
+      description: Register a new Username and passoword
+      operationId: postBody
+      requestBody:
+        description: Create a new account in the website
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        '201':
+          description: Utilizador criado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+  /api/utilizador/montagem{idm}:
+    get:
+      tags:
+        - Montagem
       summary: Mostrar montagem
       description: Obtem uma montagem pelo seu ID
       parameters:
@@ -28,7 +112,7 @@ paths:
           description: Utilizador não existe
     put:
       tags:
-        - Utilizador
+        - Montagem
       summary: Atualizar montagem de drone
       description: Atualiza dados da montagem de drones
       parameters:
@@ -54,7 +138,7 @@ paths:
           description: Montagem não existe
     delete:
       tags:
-        - Utilizador
+        - Montagem
       summary: Remover montagem de drone
       description: Remove uma uma montagem
       parameters:
@@ -73,7 +157,7 @@ paths:
   /api/utilizador/montagem:
     post:
       tags:
-        - Utilizador
+        - Montagem
       summary: Adicionar uma nova montagem
       description: Adiciona uma nova montagem à lista de montagens 
       requestBody:
@@ -306,11 +390,31 @@ components:
           - peca: camara 31/05/2023
           - peca: corpo 4/02/2023
           - peca: motor 15/06/2022
-        
-        
-        
-        
-  
+
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        username:
+          type: string
+          example: theUser
+        firstName:
+          type: string
+          example: John
+        lastName:
+          type: string
+          example: James
+        email:
+          type: string
+          example: john@email.com
+        password:
+          type: string
+          example: '12345'
+      xml:
+        name: user
     Item:
       type: object
       properties:
@@ -319,5 +423,4 @@ components:
         nome:
           type: string
 
-
- 
+    

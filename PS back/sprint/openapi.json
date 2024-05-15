@@ -5,7 +5,139 @@
     "version": "1.0.0"
   },
   "paths": {
-    "/utilizador/montagem{idm}": {
+    "/login": {
+      "get": {
+        "tags": [
+          "Utilizador"
+        ],
+        "summary": "Logs in user",
+        "description": "Takes the username and password and logs in",
+        "operationId": "getBody",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "422": {
+            "description": "Validation exception"
+          }
+        }
+      }
+    },
+    "/get/login/{idu}": {
+      "get": {
+        "tags": [
+          "Utilizador"
+        ],
+        "summary": "Searches user id",
+        "description": "Takes the user id and searches for its id",
+        "parameters": [
+          {
+            "name": "idu",
+            "in": "path",
+            "description": "ID dao User",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "operationId": "getParams",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "422": {
+            "description": "Validation exception"
+          }
+        }
+      }
+    },
+    "/register": {
+      "post": {
+        "tags": [
+          "Utilizador"
+        ],
+        "summary": "Register a new account",
+        "description": "Register a new Username and passoword",
+        "operationId": "postBody",
+        "requestBody": {
+          "description": "Create a new account in the website",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Utilizador criado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "422": {
+            "description": "Validation exception"
+          }
+        }
+      }
+    },
+    "/api/utilizador/montagem{idm}": {
       "get": {
         "tags": [
           "Montagem"
@@ -108,7 +240,7 @@
         }
       }
     },
-    "/utilizador/montagem": {
+    "/api/utilizador/montagem": {
       "post": {
         "tags": [
           "Montagem"
@@ -133,28 +265,9 @@
             "description": "Requisição inválida"
           }
         }
-      },
-      "get": {
-        "tags": [
-          "Montagem"
-        ],
-        "summary": "Lista de todas as montagens feitas",
-        "description": "Todas as montagens feitas pelo utilizador",
-        "responses": {
-          "200": {
-            "description": "Montagem pretendida",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserGet"
-                }
-              }
-            }
-          }
-        }
       }
     },
-    "/utilizador/{idm}/{idp}": {
+    "/api/utilizador/montagem/{idm}/peça/{idp}": {
       "get": {
         "tags": [
           "Peças"
@@ -287,7 +400,7 @@
         }
       }
     },
-    "/utilizador/{idm}/peça": {
+    "/api/utilizador/montagem/{idm}/peça": {
       "get": {
         "tags": [
           "Peças"
@@ -483,6 +596,39 @@
               "peca": "motor 15/06/2022"
             }
           ]
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
+          },
+          "username": {
+            "type": "string",
+            "example": "theUser"
+          },
+          "firstName": {
+            "type": "string",
+            "example": "John"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "James"
+          },
+          "email": {
+            "type": "string",
+            "example": "john@email.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "12345"
+          }
+        },
+        "xml": {
+          "name": "user"
         }
       },
       "Item": {
