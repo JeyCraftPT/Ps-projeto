@@ -29,7 +29,7 @@ function Register() {
       } else if (data.token) {
         const token = data.token;
         localStorage.setItem('token', token);
-        navigate({ to: '/profile', state: { id: username } });
+        navigate({ to: '/profile' });
       }
     } catch (e) {
       console.log(e);

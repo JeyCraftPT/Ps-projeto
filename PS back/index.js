@@ -1,16 +1,25 @@
 const express = require('express');
-const User = require('./Models/userModel.js');
 const cors = require('cors');
 const bcrypt = require('bcryptjs'); 
 const jwt = require('jsonwebtoken');
 const app = express();
-const router = require('./Controllers/montagemController.js');
+const user = require('./Controllers/userController.js');
+const mongoose = require('mongoose');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-const JWT_SECRET = 'sua_chave_secreta_aqui';
+// Conexão com Mongoose à Base de Dados
+mongoose
+  .connect('mongodb+srv://carneiro:joaogoodman@utilizadores.uqwzeex.mongodb.net/Servidor')
+
+  .then(() => {
+    console.log('MongoDB conectado com Sucesso');
+  })
+  .catch(() => {
+    console.log('Falhou');
+  });
 
 
 // Função para verificar o token
@@ -94,7 +103,8 @@ app.get('/profile', verifyToken, (req, res) => {
   res.json('Conteúdo protegido');
 });
 
-app.use('/', router);
+app.use('/', user);
+
 
 
 app.listen(3001, () => {

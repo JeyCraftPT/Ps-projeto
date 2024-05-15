@@ -1,11 +1,10 @@
-'use strict';
-import mongoose from 'mongoose';
-import { Schema } from 'mongoose';
+const mongoose = require("mongoose"); 
+const Schema = mongoose.Schema;
 
 /*
     Pecas Schema
 */
-const PecaSchema = new Schema({
+const PecaSchema = new mongoose.Schema({
   name: {
       type: String,
       required: true,
@@ -29,4 +28,4 @@ const PecaSchema = new Schema({
 
 const Peca = mongoose.model('Pecas', PecasSchema)
 
-export default Peca
+module.exports = Peca;

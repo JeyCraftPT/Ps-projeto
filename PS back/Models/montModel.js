@@ -1,11 +1,10 @@
-'use strict';
-import mongoose from 'mongoose';
-import { Schema } from 'mongoose';
+const mongoose = require("mongoose"); 
+const Schema = mongoose.Schema;
 
 /*
     Montagem Schema 
 */
-const MontagemSchema = new Schema({
+const MontagemSchema = new mongoose.Schema({
     name: [{
       type: String,
       required: true,
@@ -25,4 +24,4 @@ const MontagemSchema = new Schema({
   
   const Montagem = mongoose.model('Montagem', MontagemSchema);
   
-  export default Montagem
+  module.exports = Montagem;
