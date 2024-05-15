@@ -1,10 +1,10 @@
 const express = require('express');
-const collection = require('./mongo');
+const User = require('./Models/userModel.js');
 const cors = require('cors');
 const bcrypt = require('bcryptjs'); 
 const jwt = require('jsonwebtoken');
 const app = express();
-const router = require('./Controllers/montagem.js');
+const router = require('./Controllers/montagemController.js');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -29,7 +29,7 @@ function verifyToken(req, res, next) {
 
 app.get('/', cors(), (req, res) => {});
 
-app.post('/login', async (req, res) => {
+/* app.post('/login', async (req, res) => {
   const { username, password } = req.body;
 
   try {
@@ -87,7 +87,7 @@ app.post('/register', async (req, res) => {
     res.status(500).json('Erro');
     console.log(e);
   }
-});
+}); */
 
 // Rota protegida
 app.get('/profile', verifyToken, (req, res) => {

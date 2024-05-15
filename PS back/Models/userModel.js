@@ -8,14 +8,15 @@ import { Schema } from 'mongoose';
 var UserSchema = new Schema({
   username: {
     type: String,
-    unique: true,
-    lowercase: true,
-    trim: true,
-    required: [true, 'A username is required']
+    required: true,
   },
-  hashPassword: {
+  email: {
     type: String,
-    required: [true, 'A password is required']
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
   },
 });
 
