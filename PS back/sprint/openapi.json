@@ -6,7 +6,7 @@
   },
   "paths": {
     "/login": {
-      "get": {
+      "post": {
         "tags": [
           "Utilizador"
         ],
@@ -38,7 +38,7 @@
         }
       }
     },
-    "/get/login/{idu}": {
+    "/user/{idu}": {
       "get": {
         "tags": [
           "Utilizador"
@@ -137,7 +137,7 @@
         }
       }
     },
-    "/api/utilizador/montagem{idm}": {
+    "/utilizador/montagem{idm}": {
       "get": {
         "tags": [
           "Montagem"
@@ -240,7 +240,7 @@
         }
       }
     },
-    "/api/utilizador/montagem": {
+    "/utilizador/montagem": {
       "post": {
         "tags": [
           "Montagem"
@@ -267,7 +267,7 @@
         }
       }
     },
-    "/api/utilizador/montagem/{idm}/peça/{idp}": {
+    "/utilizador/montagem/{idm}/peça/{idp}": {
       "get": {
         "tags": [
           "Peças"
@@ -400,7 +400,7 @@
         }
       }
     },
-    "/api/utilizador/montagem/{idm}/peça": {
+    "/utilizador/montagem/{idm}/peça": {
       "get": {
         "tags": [
           "Peças"
