@@ -4,6 +4,7 @@ const cors = require('cors');
 const bcrypt = require('bcryptjs'); 
 const jwt = require('jsonwebtoken');
 const app = express();
+const router = require('./Controllers/montagem.js');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -92,6 +93,9 @@ app.post('/register', async (req, res) => {
 app.get('/profile', verifyToken, (req, res) => {
   res.json('Conteúdo protegido');
 });
+
+app.use('/', router);
+
 
 app.listen(3001, () => {
   console.log('Porta Conectada');

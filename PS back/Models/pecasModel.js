@@ -5,57 +5,26 @@ import { Schema } from 'mongoose';
 /*
     Pecas Schema
 */
-var PecasSchema = new Schema({
-  helice: {
-    value: {
-      type: Number,
-      required: false
-    },
-    timestamp: {
-      type: Date,
-      default: Date.now
-    }
+const PecaSchema = new Schema({
+  name: {
+      type: String,
+      required: true,
   },
-  bateria: {
-    value: {
-      type: Number,
-      required: false
-    },
-    timestamp: {
-      type: Date,
-      default: Date.now
-    }
+  type: {
+      type: String,
+      required: true,
+      enum: ['helice', 'bateria', 'motores', 'camara'],
   },
-  motores: {
-    value: {
+  value: {
       type: Number,
-      required: false
-    },
-    timestamp: {
-      type: Date,
-      default: Date.now
-    }
+      required: true,
   },
-<<<<<<< Updated upstream
-  chassi: {
-    value: {
-      type: Number,
-      required: false
-    },
-    timestamp: {
+  timestamp: {
       type: Date,
-      default: Date.now
-    }
-  }
-=======
-  camara : {
-    type: Number,  
-    unique : false,
-    required : false,
+      default: Date.now,
   },
-    
->>>>>>> Stashed changes
 });
+
 
 
 const Peca = mongoose.model('Pecas', PecasSchema)
