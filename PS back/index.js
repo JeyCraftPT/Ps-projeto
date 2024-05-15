@@ -5,10 +5,23 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const app = express();
 const router = require('./Controllers/montagemController.js');
+const mongoose = require('mongoose');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+
+// Conexão com Mongoose à Base de Dados
+mongoose
+  .connect('mongodb+srv://carneiro:joaogoodman@utilizadores.uqwzeex.mongodb.net/Servidor')
+
+  .then(() => {
+    console.log('MongoDB conectado com Sucesso');
+  })
+  .catch(() => {
+    console.log('Falhou');
+  });
+
 
 const JWT_SECRET = 'sua_chave_secreta_aqui';
 
