@@ -5,10 +5,10 @@
     "version": "1.0.0"
   },
   "paths": {
-    "/api/utilizador/montagem{idm}": {
+    "/utilizador/montagem{idm}": {
       "get": {
         "tags": [
-          "Utilizador"
+          "Montagem"
         ],
         "summary": "Mostrar montagem",
         "description": "Obtem uma montagem pelo seu ID",
@@ -42,7 +42,7 @@
       },
       "put": {
         "tags": [
-          "Utilizador"
+          "Montagem"
         ],
         "summary": "Atualizar montagem de drone",
         "description": "Atualiza dados da montagem de drones",
@@ -82,7 +82,7 @@
       },
       "delete": {
         "tags": [
-          "Utilizador"
+          "Montagem"
         ],
         "summary": "Remover montagem de drone",
         "description": "Remove uma uma montagem",
@@ -108,10 +108,10 @@
         }
       }
     },
-    "/api/utilizador/montagem": {
+    "/utilizador/montagem": {
       "post": {
         "tags": [
-          "Utilizador"
+          "Montagem"
         ],
         "summary": "Adicionar uma nova montagem",
         "description": "Adiciona uma nova montagem à lista de montagens",
@@ -133,9 +133,28 @@
             "description": "Requisição inválida"
           }
         }
+      },
+      "get": {
+        "tags": [
+          "Montagem"
+        ],
+        "summary": "Lista de todas as montagens feitas",
+        "description": "Todas as montagens feitas pelo utilizador",
+        "responses": {
+          "200": {
+            "description": "Montagem pretendida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserGet"
+                }
+              }
+            }
+          }
+        }
       }
     },
-    "/api/utilizador/montagem/{idm}/peça/{idp}": {
+    "/utilizador/{idm}/{idp}": {
       "get": {
         "tags": [
           "Peças"
@@ -268,7 +287,7 @@
         }
       }
     },
-    "/api/utilizador/montagem/{idm}/peça": {
+    "/utilizador/{idm}/peça": {
       "get": {
         "tags": [
           "Peças"
