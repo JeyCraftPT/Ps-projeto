@@ -1,9 +1,9 @@
 const express = require('express');
-const router = express.Router();
+const montagem = express.Router();
 const montageschema = require('../Models/montModel')
 
 
-router.get('/utilizador/montagem', async (req, res) => {    
+montagem.get('/utilizador/montagem', async (req, res) => {    
     try {
       const mont = await montageschema.find();
       res.json(mont);
@@ -13,7 +13,7 @@ router.get('/utilizador/montagem', async (req, res) => {
     }
   });
 
-  router.get('/utilizador/montagem/:id', async (req, res) => {
+montagem.get('/utilizador/montagem/:id', async (req, res) => {
     try {
         const id = parseInt(req.params.id);
         const mont = await montageschema.find();
@@ -31,7 +31,7 @@ router.get('/utilizador/montagem', async (req, res) => {
 });
 
 
-router.post ('/utilizador/montagem', async (req,res) =>{
+montagem.post ('/utilizador/montagem', async (req,res) =>{
     try{
         const novaMontagem = req.body; 
         const resultado = await r.create(novaMontagem); 
@@ -42,7 +42,7 @@ router.post ('/utilizador/montagem', async (req,res) =>{
     }
 });
 
-router.put('/utilizador/montagem/:id', async (req,res) =>{
+montagem.put('/utilizador/montagem/:id', async (req,res) =>{
     const id = parseInt(req.params.id);
     const alterparam = req.body;
     const mont = await montageschema.find();
@@ -62,7 +62,7 @@ router.put('/utilizador/montagem/:id', async (req,res) =>{
 
 //Método que apaga dados numa posição
 
-router.delete('/utilizador/montagem/:id', async (req, res) => {
+montagem.delete('/utilizador/montagem/:id', async (req, res) => {
     const id = parseInt(req.params.id);
     const mont = await montageschema.findOne({}, { skip: id });
     if (mont == null) { res.status(404).send("Não existem montagens já"); return;}
@@ -85,7 +85,7 @@ router.delete('/utilizador/montagem/:id', async (req, res) => {
 
 
 
-module.exports = router;
+module.exports = montagem;
 
 
 

@@ -1,9 +1,9 @@
 const express = require('express');
-const router = express.Router();
+const pecas = express.Router();
 const pecaschema = require('../Models/pecasModel');
 const montageschema = require('../Models/montModel')
 
-router.get('/utilizador/:idm/peca', async (req, res) => {   
+pecas.get('/utilizador/:idm/peca', async (req, res) => {   
     const id = parseInt(req.params.id); 
     try {
       const peca = await pecaschema.find();
@@ -14,7 +14,7 @@ router.get('/utilizador/:idm/peca', async (req, res) => {
     }
   });
 
-  router.get('/utilizador/:idm/:idp', async (req, res) => {
+pecas.get('/utilizador/:idm/:idp', async (req, res) => {
     try {
         const idm = parseInt(req.params.id);
         const idp = parseInt(req.params.id);
@@ -92,4 +92,4 @@ router.delete('/utilizador/montagem/:id', async (req, res) => {
 }); */
 
 
-
+module.exports = pecas;
