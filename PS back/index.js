@@ -1,10 +1,9 @@
 const express = require('express');
-const User = require('./Models/userModel.js');
 const cors = require('cors');
 const bcrypt = require('bcryptjs'); 
 const jwt = require('jsonwebtoken');
 const app = express();
-const router = require('./Controllers/montagemController.js');
+const user = require('./Controllers/userController.js');
 const mongoose = require('mongoose');
 
 app.use(express.json());
@@ -21,9 +20,6 @@ mongoose
   .catch(() => {
     console.log('Falhou');
   });
-
-
-const JWT_SECRET = 'sua_chave_secreta_aqui';
 
 
 // Função para verificar o token
@@ -107,7 +103,8 @@ app.get('/profile', verifyToken, (req, res) => {
   res.json('Conteúdo protegido');
 });
 
-app.use('/', router);
+app.use('/', user);
+
 
 
 app.listen(3001, () => {

@@ -1,7 +1,12 @@
 const express = require('express');
-const router = express.Router();
+const User = require('../Models/userModel.js');
+const user = express.Router();
+const bcrypt = require('bcryptjs'); 
+const jwt = require('jsonwebtoken');
 
-router.post('/login', async (req, res) => {
+const JWT_SECRET = 'sua_chave_secreta_aqui';
+
+user.post('/login', async (req, res) => {
     const { username, password } = req.body;
   
     try {
@@ -30,7 +35,7 @@ router.post('/login', async (req, res) => {
     }
   });
   
-router.post('/register', async (req, res) => {
+  user.post('/register', async (req, res) => {
     const { username, email, password } = req.body;
 
     try {
@@ -60,3 +65,5 @@ router.post('/register', async (req, res) => {
         console.log(e);
     }
 });
+
+module.exports = user;
