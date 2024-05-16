@@ -87,7 +87,7 @@ function Register() {
               <br />
               <button
                 onClick={SubmitRegister}
-                className="cursor-pointer justify-center content-center block mx-auto mt-3 bg-secondary font-bold py-2 px-4 rounded-lg text-black"
+                className="cursor-pointer justify-center content-center block mx-auto mt-3 bg-indigo-500 font-bold py-2 px-4 rounded-lg text-black"
               >
                 Register
               </button>
