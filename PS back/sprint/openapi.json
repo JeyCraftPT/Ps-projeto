@@ -12,7 +12,36 @@
         ],
         "summary": "Logs in user",
         "description": "Takes the username and password and logs in",
-        "operationId": "getBody",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "query",
+            "description": "Username for login",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "description": "email in account",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "description": "Password used for login",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "postLogin",
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -90,7 +119,36 @@
         ],
         "summary": "Register a new account",
         "description": "Register a new Username and passoword",
-        "operationId": "postBody",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "query",
+            "description": "Username for login",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "description": "email in account",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "description": "Password used for login",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "postNewUser",
         "requestBody": {
           "description": "Create a new account in the website",
           "content": {
@@ -609,14 +667,6 @@
           "username": {
             "type": "string",
             "example": "theUser"
-          },
-          "firstName": {
-            "type": "string",
-            "example": "John"
-          },
-          "lastName": {
-            "type": "string",
-            "example": "James"
           },
           "email": {
             "type": "string",

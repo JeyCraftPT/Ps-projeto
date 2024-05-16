@@ -9,7 +9,26 @@ paths:
         - Utilizador
       summary: Logs in user
       description: Takes the username and password and logs in
-      operationId: getBody
+      parameters:
+        - name: username 
+          in: query
+          description: Username for login
+          required: true
+          schema:
+            type: string
+        - name: email
+          in: query
+          description: email in account
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: Password used for login
+          required: true
+          schema:
+            type: string
+      operationId: postLogin
       responses: 
         '200':
           description: Successful operation
@@ -59,7 +78,26 @@ paths:
       - Utilizador
       summary: Register a new account
       description: Register a new Username and passoword
-      operationId: postBody
+      parameters:
+        - name: username 
+          in: query
+          description: Username for login
+          required: true
+          schema:
+            type: string
+        - name: email
+          in: query
+          description: email in account
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: Password used for login
+          required: true
+          schema:
+            type: string
+      operationId: postNewUser
       requestBody:
         description: Create a new account in the website
         content:
@@ -364,8 +402,6 @@ components:
         id: 123
         name: Drone favorito
         description: Modelo X, feito por Y
-        
-        
     PecaGet:
       type: object
       properties:
@@ -390,7 +426,6 @@ components:
           - peca: camara 31/05/2023
           - peca: corpo 4/02/2023
           - peca: motor 15/06/2022
-
     User:
       type: object
       properties:
@@ -401,12 +436,6 @@ components:
         username:
           type: string
           example: theUser
-        firstName:
-          type: string
-          example: John
-        lastName:
-          type: string
-          example: James
         email:
           type: string
           example: john@email.com
@@ -422,5 +451,3 @@ components:
           type: integer
         nome:
           type: string
-
-    
