@@ -30,10 +30,13 @@ function About() {
               <strong>Leonor Moreira</strong> - Nº50877
             </li>
             <li>
-              <strong>Tiago Fonseca</strong> - Nº49760
+              <strong>Eduardo Abrantes</strong> - Nº50391
             </li>
             <li>
-              <strong>Matilde Almeida</strong> - Nº46194
+              <strong>Rodrigo Paiva</strong> - Nº49442
+            </li>
+            <li>
+              <strong>Matilde Almeida</strong> - Nº
             </li>
           </ul>
         </section>
@@ -41,17 +44,39 @@ function About() {
         {/* Descrição do Projeto */}
         <section className="rounded-lg bg-white bg-opacity-10 p-6">
           <h2 className="text-4xl font-bold mb-4">
-            Projeto de Gestão de Montagem de Drones
+            CANTTOUCHME: Um Livro de Registos Pessoal e Seguro
           </h2>
           <p className="text-xl">
-            O objetivo deste trabalho é desenvolver uma aplicação web para gerir o processo de montagem de drones, permitindo que os utilizadores se registem, autentiquem e realizem operações CRUD (criação, visualização, atualização e eliminação) de informações relacionadas com a montagem de drones. A aplicação deverá implementar autenticação de utilizadores com JWT, gerir peças necessárias para a montagem e associações dessas peças às montagens, além de fornecer estatísticas detalhadas sobre o processo. Os endpoints da API serão desenvolvidos conforme as melhores práticas RESTful e documentados em OpenAPI, utilizando Node.js, Express.js, MongoDB e Mongoose.
+            A ideia deste trabalho é desenvolver um programa que permita guardar
+            registos de texto imutáveis para vários utilizadores. Embora as
+            aplicações ou sistemas que suportam mais do que um utilizador serem
+            especialmente beneficiadas em arquiteturas cliente/servidor, esta
+            pode ser pensada como uma aplicação para computador pessoal (quem
+            quiser, pode fazer uma aplicação web), que eventualmente é usado por
+            mais do que um utilizador. A aplicação deve permitir registar os
+            utilizadores e que estes registem atividades do seu dia através da
+            introdução de uma descrição em texto. Sempre que um utilizador entra
+            na aplicação, este deve apenas ver um campo onde pode escrever essa
+            descrição, que fica guardada juntamente com a data, e ter a opção de
+            ver registos anteriores. A aplicação deve guardar todos os registos
+            cifrados no sistema (para que ninguém os consiga ver, mesmo que abra
+            os ficheiros com outro programa externo). A chave de cifra deve ser
+            única por utilizador, e ser derivada da palavra-passe do utilizador.
+            Embora se apresente como um aspeto mais avançado, recomenda-se que a
+            aplicação guarde cada um dos registos com um código de autenticação
+            de mensagens que o cole ao bloco anterior, ao estilo de uma
+            blockchain (i.e., cada novo registo é adicionado como sendo um novo
+            bloco da blockchain). Assim, cada novo bloco contém [valor hash do
+            bloco anterior, data do registo, texto do registo, código de
+            auteticação de mensagem]. A chave de integridade deve ser também
+            única por utilizador, e portanto ser derivada da sua palavra-passe.
           </p>
         </section>
       </main>
 
       <footer className="bg-gray-800 text-white py-4 fixed bottom-0 w-full">
         <p className="text-center text-xl font-bold">
-          &copy; 2024 Projeto Programação no Servidor
+          &copy; 2024 Projeto CANTTOUCHME CiberSegurança
         </p>
       </footer>
     </div>
