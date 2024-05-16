@@ -54,7 +54,7 @@ user.post('/login', async (req, res) => {
         
         await User.insertMany([data]);
 
-        res.json({token, userId:data._id, message:'Sucesso'});
+        res.json({userId:data._id, message:'Sucesso'});
         }
     } catch (e) {
         res.status(500).json('Erro');
