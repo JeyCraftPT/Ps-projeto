@@ -41,7 +41,7 @@ app.get('/', cors(), (req, res) => {});
 
 
 // Rota protegida
-app.get('/profile', verifyToken, (req, res) => {
+app.get('/utilizador/montagem', verifyToken, (req, res) => {
   res.json('Conteúdo protegido');
 });
 

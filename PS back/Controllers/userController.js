@@ -53,11 +53,7 @@ user.post('/login', async (req, res) => {
         };
         
         await User.insertMany([data]);
-        // Criação do token JWT
-        const token = jwt.sign({ id: data._id }, JWT_SECRET, {
-            expiresIn: 86400 // expira em 24 horas
-        });
-        res.header('authorization', token)
+
         res.json({token, userId:data._id, message:'Sucesso'});
         }
     } catch (e) {
