@@ -11,6 +11,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
+const JWT_SECRET = 'sua_chave_secreta_aqui';
+
+
 // Conexão com Mongoose à Base de Dados
 mongoose
   .connect('mongodb+srv://carneiro:joaogoodman@utilizadores.uqwzeex.mongodb.net/Servidor')
@@ -27,8 +30,9 @@ mongoose
 function verifyToken(req, res, next) {
   const token = req.headers['authorization'];
   if (!token) return res.status(403).json({ auth: false, message: 'Token não fornecido.' });
-
-  jwt.verify(token, process.env.JWT_SECRET, function(err, decoded) {
+  
+  jwt.verify(token, JWT_SECRET, function(err, decoded) {
+    console.log(err);
     if (err) return res.status(500).json({ auth: false, message: 'Falha ao autenticar o token.' });
 
     // Se tudo estiver correto, salva no request para uso posterior
