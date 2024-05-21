@@ -47,16 +47,18 @@ app.get('/', cors(), (req, res) => {});
 // Rota protegida
 app.get('/utilizador/montagem', verifyToken, (req, res) => {
   res.json('Conteúdo protegido');
-});
+}); 
 
 // Para funcionar o userController.js
 app.use('/', user);
 
+// Rotas que Futuramente têm de estar protegidas
+
 // Para funcionar o pecasController.js
-app.use('/', pecas);
+app.use('/', verifyToken, pecas);
 
 // Para funcionar o montagemController.js
-app.use('/', montagem);
+app.use('/', verifyToken, montagem);
 
 
 app.listen(3001, () => {

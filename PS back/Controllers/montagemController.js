@@ -1,11 +1,11 @@
 const express = require('express');
+const Montagem = require('../Models/montModel');
 const montagem = express.Router();
-const montageschema = require('../Models/montModel')
 
 
 montagem.get('/utilizador/montagem', async (req, res) => {    
     try {
-      const mont = await montageschema.find();
+      const mont = await Montagem.find();
       res.json(mont);
     } catch (error) {
       console.error(error);
@@ -16,7 +16,7 @@ montagem.get('/utilizador/montagem', async (req, res) => {
 montagem.get('/utilizador/montagem/:id', async (req, res) => {
     try {
         const id = parseInt(req.params.id);
-        const mont = await montageschema.find();
+        const mont = await Montagem.find();
         const index = mont.length;
 
         if (isNaN(id) || id < 0 || id >= index) {
@@ -45,7 +45,7 @@ montagem.post ('/utilizador/montagem', async (req,res) =>{
 montagem.put('/utilizador/montagem/:id', async (req,res) =>{
     const id = parseInt(req.params.id);
     const alterparam = req.body;
-    const mont = await montageschema.find();
+    const mont = await Montagem.find();
     const monti = mont[id];
     const index = mont.length;
     try {
@@ -64,7 +64,7 @@ montagem.put('/utilizador/montagem/:id', async (req,res) =>{
 
 montagem.delete('/utilizador/montagem/:id', async (req, res) => {
     const id = parseInt(req.params.id);
-    const mont = await montageschema.findOne({}, { skip: id });
+    const mont = await Montagem.findOne({}, { skip: id });
     if (mont == null) { res.status(404).send("Não existem montagens já"); return;}
     console.log(mont);
     const result = await r.deleteOne({ _id: mont._id });
