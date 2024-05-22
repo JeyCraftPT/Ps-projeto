@@ -3,8 +3,8 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const app = express();
 const user = require('./Controllers/userController.js');
-const pecas = require('./Controllers/userController.js');
-const montagem = require('./Controllers/userController.js');
+/* const pecas = require('./Controllers/pecasController.js'); */
+const montagem = require('./Controllers/montagemController.js');
 const mongoose = require('mongoose');
 
 app.use(express.json());
@@ -45,7 +45,7 @@ app.get('/', cors(), (req, res) => {});
 
 
 // Rota protegida
-app.get('/utilizador/montagem', verifyToken, (req, res) => {
+app.get('/utilizador/teste', verifyToken, (req, res) => {
   res.json('Conteúdo protegido');
 }); 
 
@@ -55,14 +55,11 @@ app.use('/', user);
 // Rotas que Futuramente têm de estar protegidas
 
 // Para funcionar o pecasController.js
-app.use('/', verifyToken, pecas);
+/* app.use('/', verifyToken, pecas); */
 
 // Para funcionar o montagemController.js
 app.use('/', verifyToken, montagem);
 
-app.use('/utilizador/montagem', verifyToken, (req, res)=>{
-  res.json('Verificação do token sucedida');
-});
 
 app.listen(3001, () => {
   console.log('Porta Conectada');
