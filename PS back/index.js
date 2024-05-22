@@ -60,6 +60,9 @@ app.use('/', verifyToken, pecas);
 // Para funcionar o montagemController.js
 app.use('/', verifyToken, montagem);
 
+app.use('/utilizador/montagem', verifyToken, (req, res)=>{
+  res.json('Verificação do token sucedida');
+});
 
 app.listen(3001, () => {
   console.log('Porta Conectada');

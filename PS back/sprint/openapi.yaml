@@ -125,7 +125,7 @@ paths:
           description: Invalid input
         '422':
           description: Validation exception
-  /utilizador/montagem{idm}:
+  /utilizador/{idm}:
     get:
       tags:
         - Montagem
@@ -209,7 +209,7 @@ paths:
           description: Montagem adiconada com sucesso!
         '400':
           description: Requisição inválida
-  /utilizador/montagem/{idm}/peça/{idp}:
+  /utilizador/{idm}/{idp}:
     get:
       tags:
         - Peças
@@ -297,7 +297,7 @@ paths:
           description: Requisição inválida
         '404':
           description: Montagem ou peça não existem
-  /utilizador/montagem/{idm}/peça:
+  /utilizador/{idm}/peça:
     get:
       tags:
         - Peças
