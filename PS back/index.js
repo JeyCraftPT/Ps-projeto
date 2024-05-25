@@ -3,7 +3,7 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const app = express();
 const user = require('./Controllers/userController.js');
-/* const pecas = require('./Controllers/pecasController.js'); */
+const pecas = require('./Controllers/pecasController.js');
 const montagem = require('./Controllers/montagemController.js');
 const mongoose = require('mongoose');
 
@@ -44,18 +44,11 @@ function verifyToken(req, res, next) {
 app.get('/', cors(), (req, res) => {});
 
 
-// Rota protegida
-app.get('/utilizador/teste', verifyToken, (req, res) => {
-  res.json('Conteúdo protegido');
-}); 
-
 // Para funcionar o userController.js
 app.use('/', user);
 
-// Rotas que Futuramente têm de estar protegidas
-
 // Para funcionar o pecasController.js
-/* app.use('/', verifyToken, pecas); */
+app.use('/', verifyToken, pecas);
 
 // Para funcionar o montagemController.js
 app.use('/', verifyToken, montagem);

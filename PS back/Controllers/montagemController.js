@@ -3,86 +3,68 @@ const Montagem = require('../Models/montModel');
 const montagem = express.Router();
 
 
-montagem.get('/utilizador/montagem', async (req, res) => {    
+// Criar uma nova montagem
+montagem.post('/montagens', async (req, res) => {
     try {
-      const mont = await Montagem.find();
-      res.json(mont);
+      const novaMontagem = new Montagem(req.body);
+      const montagemSalva = await novaMontagem.save();
+      res.status(201).send(montagemSalva);
     } catch (error) {
-      console.error(error);
-      res.status(500).send('Erro a mostrar montagem!');
-    }
-  });
-
-montagem.get('/utilizador/montagem/:id', async (req, res) => {
-    try {
-        const id = parseInt(req.params.id);
-        const mont = await Montagem.find();
-        const index = mont.length;
-
-        if (isNaN(id) || id < 0 || id >= index) {
-            res.status(404).json({ error: 'O id da montagem precisa ser um número inteiro dentro dos limites da lista!' });
-        } else {
-            res.json(mont[id]);
-        }
-    } catch (error) {
-        console.error(error);
-        res.status(500).send("Erro ao mostrar montagem!");
+      res.status(400).send(error);
     }
 });
-
-
-montagem.post ('/utilizador/montagem', async (req,res) =>{
-    try{
-        const novaMontagem = req.body; 
-        const resultado = await r.create(novaMontagem); 
-        res.json({mensagem :'Nova montagem adicionada'}); 
-    }catch(error){
-        console.error(error)
-        res.status(500).send('Erro a acrescentar montagem!')
-    }
-});
-
-montagem.put('/utilizador/montagem/:id', async (req,res) =>{
-    const id = parseInt(req.params.id);
-    const alterparam = req.body;
-    const mont = await Montagem.find();
-    const monti = mont[id];
-    const index = mont.length;
+  
+// Listar todas as montagens
+montagem.get('/montagens', async (req, res) => {
     try {
-        if (isNaN(id) || id < 0 || id >= index) {
-            res.status(404).json({ error: 'O id da montagem precisa ser um número inteiro dentro dos limites da lista!' });
-        } else {
-            res.json({mensagem: "Montagem alterada"});
-        }
+      const montagens = await Montagem.find().populate('pecas.peca');
+      res.status(200).send(montagens);
     } catch (error) {
-        console.error(error);
-        res.status(500).send('Erro na atualização!')
+      res.status(500).send(error);
     }
 });
-
-//Método que apaga dados numa posição
-
-montagem.delete('/utilizador/montagem/:id', async (req, res) => {
-    const id = parseInt(req.params.id);
-    const mont = await Montagem.findOne({}, { skip: id });
-    if (mont == null) { res.status(404).send("Não existem montagens já"); return;}
-    console.log(mont);
-    const result = await r.deleteOne({ _id: mont._id });
-    const index = mont.length;
-
+  
+// Buscar uma montagem por ID
+montagem.get('/montagens/:id', async (req, res) => {
     try {
-        // Verificações
-        if (isNaN(id) || id < 0 || id >= index) {
-            res.status(404).json({ error: 'O id da montagem precisa ser um número inteiro dentro dos limites da lista!' });
-        } else {
-            res.json({mensagem: "Dados apagados com sucesso"});
-        }
+      const montagem = await Montagem.findById(req.params.id).populate('pecas.peca');
+      if (!montagem) {
+        return res.status(404).send({ message: 'Montagem não encontrada' });
+      }
+      res.status(200).send(montagem);
     } catch (error) {
-        console.error(error);
-        res.status(500).send('Erro a apagar dados!');
+      res.status(500).send(error);
     }
 });
-
+  
+// Atualizar uma montagem por ID
+montagem.put('/montagens/:id', async (req, res) => {
+    try {
+      const montagem = await Montagem.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+        runValidators: true,
+      }).populate('pecas.peca');
+      if (!montagem) {
+        return res.status(404).send({ message: 'Montagem não encontrada' });
+      }
+      res.status(200).send(montagem);
+    } catch (error) {
+      res.status(400).send(error);
+    }
+});
+  
+  // Deletar uma montagem por ID
+montagem.delete('/montagens/:id', async (req, res) => {
+    try {
+      const montagem = await Montagem.findByIdAndDelete(req.params.id);
+      if (!montagem) {
+        return res.status(404).send({ message: 'Montagem não encontrada' });
+      }
+      res.status(200).send({ message: 'Montagem deletada com sucesso' });
+    } catch (error) {
+      res.status(500).send(error);
+    }
+});
 
 
 module.exports = montagem;

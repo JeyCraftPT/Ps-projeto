@@ -9,23 +9,10 @@ const PecaSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  type: {
-    type: String,
-    required: true,
-    enum: ['helice', 'bateria', 'motores', 'camara'],
-  },
-  value: {
-    type: Number,
-    required: true,
-  },
   quantity: {
     type: Number,
     required: true,
     min: 0,
-  },
-  timestamp: {
-    type: Date,
-    default: Date.now,
   },
 });
 
