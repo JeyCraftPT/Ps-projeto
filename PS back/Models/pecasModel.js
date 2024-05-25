@@ -27,10 +27,6 @@ module.exports = Peca;
 
 
 
-
-
-
-
 /* const mongoose = require("mongoose"); 
 const Schema = mongoose.Schema;
 
