@@ -1,5 +1,6 @@
 const express = require('express');
 const Montagem = require('../Models/montModel');
+const Pecas = require('../Models/pecasModel');
 const montagem = express.Router();
 
 
@@ -8,11 +9,31 @@ montagem.post('/montagens', async (req, res) => {
     try {
       const novaMontagem = new Montagem(req.body);
       const montagemSalva = await novaMontagem.save();
+      
+
+      for(const item of novaMontagem.pecas){
+        const peca = await Peca.findById(item.peca);
+        if (!peca){
+          throw new error(`Peça com ID ${item.peca} não encontrada.`);
+        }
+        if (peca.stock < item.quantity) {
+            throw new Error(`Estoque insuficiente para a peça ${peca.name}.`);
+        }
+      }
+    
+      for (const item of novaMontagem.pecas) {
+        const peca = await Peca.findById(item.peca);
+        peca.quantity -= item.quantity;
+        await peca.save({ session });
+        
+      } 
       res.status(201).send(montagemSalva);
-    } catch (error) {
+    }
+     
+       catch (error) {
       res.status(400).send(error);
     }
-});
+  });
   
 // Listar todas as montagens
 montagem.get('/montagens', async (req, res) => {
