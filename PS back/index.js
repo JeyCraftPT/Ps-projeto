@@ -32,7 +32,7 @@ function verifyToken(req, res, next) {
   if (!token) return res.status(403).json({ auth: false, message: 'Token não fornecido.' });
   
   jwt.verify(token, JWT_SECRET, function(err, decoded) {
-    console.log(err);
+    
     if (err) return res.status(500).json({ auth: false, message: 'Falha ao autenticar o token.' });
 
     // Se tudo estiver correto, salva no request para uso posterior

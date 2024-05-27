@@ -242,7 +242,7 @@ montagem.get('/montagens/:id', async (req, res) => {
 });
 
 // Atualizar uma montagem por ID
-montagem.put('/montagens/:id', async (req, res) => {
+/* montagem.put('/montagens/:id', async (req, res) => {
   try {
     const montagem = await Montagem.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -254,6 +254,78 @@ montagem.put('/montagens/:id', async (req, res) => {
     res.status(200).send(montagem);
   } catch (error) {
     res.status(400).send(error);
+  }
+}); */
+
+montagem.put('/montagens/:id', async (req, res) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
+  try {
+    const { pecas: newPecas } = req.body;
+    const montagem = await Montagem.findById(req.params.id).populate('pecas.peca').session(session);
+
+    if (!montagem) {
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(404).send({ message: 'Montagem não encontrada' });
+    }
+
+    const originalPecas = montagem.pecas;
+
+    // Adjust stock based on changes in pecas quantity
+    for (const originalItem of originalPecas) {
+      const newItem = newPecas.find(p => p.peca == originalItem.peca._id.toString());
+
+      if (newItem) {
+        const quantityChange = originalItem.quantity - newItem.quantity;
+
+        if (quantityChange > 0) {
+          // If quantity is reduced, increment stock
+          const peca = await Peca.findById(originalItem.peca._id).session(session);
+          peca.stock += quantityChange;
+          await peca.save({ session });
+        } else if (quantityChange < 0) {
+          // If quantity is increased, check stock
+          const peca = await Peca.findById(originalItem.peca._id).session(session);
+          const absChange = Math.abs(quantityChange);
+          if (peca.stock < absChange) {
+            throw new Error(`Estoque insuficiente para a peça ${peca.name}.`);
+          }
+          peca.stock -= absChange;
+          await peca.save({ session });
+        }
+      } else {
+        // If the item was removed completely, increment stock
+        const peca = await Peca.findById(originalItem.peca._id).session(session);
+        peca.stock += originalItem.quantity;
+        await peca.save({ session });
+      }
+    }
+
+    // Handle newly added pecas
+    for (const newItem of newPecas) {
+      const originalItem = originalPecas.find(p => p.peca._id.toString() == newItem.peca);
+
+      if (!originalItem) {
+        const peca = await Peca.findById(newItem.peca).session(session);
+        if (peca.stock < newItem.quantity) {
+          throw new Error(`Estoque insuficiente para a peça ${peca.name}.`);
+        }
+        peca.stock -= newItem.quantity;
+        await peca.save({ session });
+      }
+    }
+
+    montagem.set(req.body);
+    const updatedMontagem = await montagem.save({ session });
+    await session.commitTransaction();
+    session.endSession();
+    res.status(200).send(updatedMontagem);
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+    res.status(400).send({ message: error.message });
   }
 });
 
