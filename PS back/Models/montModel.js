@@ -16,7 +16,6 @@ const MontagemSchema = new mongoose.Schema({
   pecas: [{
     peca: {
       type: Schema.Types.ObjectId,
-      ref: 'Pecas',
       required: true,
     },
     quantity: {
