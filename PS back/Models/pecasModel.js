@@ -14,6 +14,11 @@ const PecaSchema = new mongoose.Schema({
     required: true,
     min: 0,
   },
+  stock: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
 });
 
 const Peca = mongoose.model('Pecas', PecaSchema);

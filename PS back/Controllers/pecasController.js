@@ -3,9 +3,20 @@ const peca = express.Router();
 const Peca = require('../Models/pecasModel.js');
 
 // Criar uma nova peça
+/* peca.post('/pecas', async (req, res) => {
+  try {
+    const novaPeca = new Peca(req.body);
+    const pecaSalva = await novaPeca.save();
+    res.status(201).send(pecaSalva);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+}); */
+
 peca.post('/pecas', async (req, res) => {
   try {
     const novaPeca = new Peca(req.body);
+    novaPeca.stock = req.body.stock || 0; // Ensure stock is set
     const pecaSalva = await novaPeca.save();
     res.status(201).send(pecaSalva);
   } catch (error) {
@@ -62,6 +73,28 @@ peca.delete('/pecas/:id', async (req, res) => {
     res.status(200).send({ message: 'Peça deletada com sucesso' });
   } catch (error) {
     res.status(500).send(error);
+  }
+});
+
+peca.post('/pecas/:id/add-stock', async (req, res) => {
+  const { amount } = req.body;
+
+  if (typeof amount !== 'number' || amount <= 0) {
+    return res.status(400).send({ message: 'Quantidade inválida.' });
+  }
+
+  try {
+    const peca = await Peca.findById(req.params.id);
+    if (!peca) {
+      return res.status(404).send({ message: 'Peça não encontrada.' });
+    }
+
+    peca.stock += amount;
+    const updatedPeca = await peca.save();
+
+    res.status(200).send(updatedPeca);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
   }
 });
 
