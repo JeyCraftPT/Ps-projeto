@@ -2,23 +2,21 @@ const express = require('express');
 const peca = express.Router();
 const Peca = require('../Models/pecasModel.js');
 
-// Criar uma nova peça
-/* peca.post('/pecas', async (req, res) => {
-  try {
-    const novaPeca = new Peca(req.body);
-    const pecaSalva = await novaPeca.save();
-    res.status(201).send(pecaSalva);
-  } catch (error) {
-    res.status(400).send(error);
-  }
-}); */
-
+//Adiconar peça
 peca.post('/pecas', async (req, res) => {
   try {
     const novaPeca = new Peca(req.body);
-    novaPeca.stock = req.body.stock || 0; // Ensure stock is set
-    const pecaSalva = await novaPeca.save();
-    res.status(201).send(pecaSalva);
+    const {name} = req.body; 
+    const check = await Peca.findOne({ name: name });
+    if (check) {
+      res.json('Peça já existe, utilizar o put para dar update ao stock');
+    }
+    else{  
+      novaPeca.stock = req.body.stock || 0; // Verificar que o stock está preparado
+      const pecaSalva = await novaPeca.save();
+      res.status(201).send(pecaSalva);
+    } 
+
   } catch (error) {
     res.status(400).send(error);
   }
@@ -34,7 +32,7 @@ peca.get('/pecas', async (req, res) => {
   }
 });
 
-// Buscar uma peça por ID
+// Mostrar peça por ID
 peca.get('/pecas/:id', async (req, res) => {
   try {
     const peca = await Peca.findById(req.params.id);
@@ -47,10 +45,10 @@ peca.get('/pecas/:id', async (req, res) => {
   }
 });
 
-// Atualizar uma peça por ID
+// Atualizar peça por ID
 peca.put('/pecas/:id', async (req, res) => {
   try {
-    const peca = await Peca.findByIdAndUpdate(req.params.id, req.body, {
+    const peca = await Peca.findByIdAndUpdate(req.params.id, { stock: req.body.stock }, {
       new: true,
       runValidators: true,
     });
@@ -63,14 +61,14 @@ peca.put('/pecas/:id', async (req, res) => {
   }
 });
 
-// Deletar uma peça por ID
+// Eliminar uma peça por ID
 peca.delete('/pecas/:id', async (req, res) => {
   try {
     const peca = await Peca.findByIdAndDelete(req.params.id);
     if (!peca) {
       return res.status(404).send({ message: 'Peça não encontrada' });
     }
-    res.status(200).send({ message: 'Peça deletada com sucesso' });
+    res.status(200).send({ message: 'Peça eliminada com sucesso' });
   } catch (error) {
     res.status(500).send(error);
   }
