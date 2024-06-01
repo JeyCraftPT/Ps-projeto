@@ -1,6 +1,6 @@
 const express = require('express');
 const estatisticas = express.Router();
-const Montagem = require('../Models/montModel');
+const Montagem = require('../Models/montModel.js');
 const Peca = require('../Models/pecasModel.js');
 
 // Obter a contagem total de peças no estoque
@@ -25,16 +25,17 @@ estatisticas.get('/totalpecas/total-stock', async (req, res) => {
 
 
 // Obter a contagem total de montagens
-estatisticas.get('/montagens/total', async (req, res) => {
+estatisticas.get('/montagem/total', async (req, res) => {
     try {
         console.log('Iniciando contagem de montagens...');
         const totalMontagens = await Montagem.countDocuments();
         console.log(`Total de montagens: ${totalMontagens}`);
         res.status(200).send({ totalMontagens });
     } catch (error) {
-        console.error('Erro ao contar montagens:', error);
+        console.error('Erro ao contar montagens:', error); // Log de erro detalhado
         res.status(500).send({ message: error.message });
     }
 });
+
 
 module.exports = estatisticas;
