@@ -37,5 +37,40 @@ estatisticas.get('/montagem/total', async (req, res) => {
     }
 });
 
+// Obter a peça mais utilizada
+estatisticas.get('/peca/mais-utilizada', async (req, res) => {
+    try {
+        const pecaMaisUtilizada = await Montagem.aggregate([
+            { $unwind: "$pecas" },
+            { $group: { _id: "$pecas.peca", totalUsos: { $sum: "$pecas.quantity" } } },
+            { $sort: { totalUsos: -1 } },
+            { $limit: 1 },
+            {
+                $lookup: {
+                    from: "pecas",
+                    localField: "_id",
+                    foreignField: "_id",
+                    as: "peca"
+                }
+            },
+            { $unwind: "$peca" },
+            {
+                $project: {
+                    _id: 0,
+                    peca: "$peca.name",
+                    totalUsos: 1
+                }
+            }
+        ]);
+
+        if (pecaMaisUtilizada.length === 0) {
+            return res.status(404).send({ message: 'Nenhuma peça encontrada.' });
+        }
+
+        res.status(200).send(pecaMaisUtilizada[0]);
+    } catch (error) {
+        res.status(500).send({ message: error.message });
+    }
+});
 
 module.exports = estatisticas;
