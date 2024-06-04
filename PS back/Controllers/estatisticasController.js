@@ -3,6 +3,7 @@ const estatisticas = express.Router();
 const Montagem = require('../Models/montModel.js');
 const Peca = require('../Models/pecasModel.js');
 
+
 // Obter a contagem total de peças no estoque
 estatisticas.get('/totalpecas/total-stock', async (req, res) => {
     try {
@@ -36,6 +37,7 @@ estatisticas.get('/montagem/total', async (req, res) => {
         res.status(500).send({ message: error.message });
     }
 });
+
 
 // Obter a peça mais utilizada
 estatisticas.get('/peca/mais-utilizada', async (req, res) => {
@@ -73,4 +75,24 @@ estatisticas.get('/peca/mais-utilizada', async (req, res) => {
     }
 });
 
+
+
+// Obter a média de peças utilizadas por montagem
+estatisticas.get('/estatisticas/pecas', async (req, res) => {
+    try {
+        const mediaPecasPorMontagem = await Montagem.aggregate([
+            { $unwind: "$pecas" },
+            { $group: { _id: "$_id", totalPecas: { $sum: "$pecas.quantity" } } },
+            { $group: { _id: null, mediaPecas: { $avg: "$totalPecas" } } }
+        ]);
+
+        const media = mediaPecasPorMontagem[0] ? mediaPecasPorMontagem[0].mediaPecas : 0;
+        res.status(200).send({ mediaPecasPorMontagem: media });
+    } catch (error) {
+        res.status(500).send({ message: error.message });
+    }
+});
+
+
 module.exports = estatisticas;
+
