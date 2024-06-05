@@ -4,7 +4,7 @@ const Montagem = require('../Models/montModel.js');
 const Peca = require('../Models/pecasModel.js');
 
 
-// Obter a contagem total de peças no estoque
+// Obter a contagem total de peças no stock
 estatisticas.get('/totalpecas/total-stock', async (req, res) => {
     try {
         const totalStock = await Peca.aggregate([
